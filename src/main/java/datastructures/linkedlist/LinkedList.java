@@ -1,5 +1,8 @@
 package datastructures.linkedlist;
 
+import java.util.HashSet;
+import java.util.Set;
+
 public class LinkedList {
     private Node head;
     private Node tail;
@@ -187,6 +190,49 @@ public class LinkedList {
             System.out.println("Tail: null");
         } else {
             System.out.println("Tail: " + tail.value);
+        }
+    }
+
+    public boolean hasLoop() {
+        Node slow = head;
+        Node fast = head;
+        while (fast != null && fast.next != null) {
+            slow = slow.next;
+            fast = fast.next.next;
+            if (slow == fast) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public Node findKthFromEnd(int k) {
+        Node slow = head;
+        Node fast = head;
+        for (int i = 0; i < k; i++) {
+            fast = fast.next;
+        }
+        while (fast != null) {
+            slow = slow.next;
+            fast = fast.next;
+        }
+        return slow;
+    }
+
+    public void removeDuplicates() {
+        Set<Integer> values = new HashSet<>();
+        Node prev = null;
+        Node current = head;
+        while (current != null) {
+            if (values.contains(current.value)) {
+                prev.next = current.next;
+                length -= 1;
+            } else {
+                values.add(current.value);
+                prev = current;
+            }
+            current = current.next;
         }
     }
 
